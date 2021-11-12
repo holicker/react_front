@@ -1,28 +1,21 @@
 import OpenColor from "open-color";
 import React from "react";
-import { Redirect, Route } from "react-router";
 import styled from "styled-components";
+import ListMerchandiseMapContainer from "../../containers/map/merchandise/ListMerchandiseMapContainer";
+import ListQnaMapContainer from "../../containers/map/qna/ListQnaMapContainer";
+import ListReviewMapContainer from "../../containers/map/review/ListReviewMapContainer";
 import { BasicDiv } from "../common/BasicDiv";
 import { BasicItem } from "../common/BasicItem";
 import Responsive from "../common/Responsive";
-import VendorMainMap from "./VendorMainMap";
 import VendorMenuBar from "../menubar/VendorMenuBar";
-import ListMerchandiseMapPage from "../../pages/ListMerchandiseMapPage";
-import ListQnaPage from "../../pages/ListQnaPage";
-import ListReviewPage from "../../pages/ListReviewPage";
-import MakeQnaPage from "../../pages/MakeQnaPage";
-import MakeReviewPage from "../../pages/MakeReviewPage";
-import ViewMerchandisePage from "../../pages/ViewMerchandisePage";
-import ViewQnaPage from "../../pages/ViewQnaPage";
-import ViewVendorInfoMapContainer from "../../containers/map/ViewVendorInfoMapContainer";
-
-const columsNumber = 6;
+import ListReviewMap from "./review/ListReviewMap";
+import ViewVendorInfoMap from "./ViewVendorInfoMap";
 
 const ViewVendorMapBlock = styled(BasicDiv)`
   position: relative;
   margin: 0px 0px;
   background-color: ${OpenColor.gray[5]};
-  display: flex;
+  display: ${(props) => (props.viewVendor ? "flex" : "none")};
   justify-content: center;
   width: 100%;
   height: 100%;
@@ -43,20 +36,52 @@ const ViewVendorMapItem = styled(BasicItem)`
   &.content {
     flex: 2;
   }
+
+  &.merchandise {
+    display: ${(props) => (props.view ? "block" : "none")};
+  }
+
+  &.review {
+    display: ${(props) => (props.view ? "block" : "none")};
+  }
+
+  &.qna {
+    display: ${(props) => (props.view ? "block" : "none")};
+  }
 `;
 
-const ViewVendorMap = ({ match }) => {
-  console.log({ match });
-
-  const { vendorid } = match.params;
+const ViewVendorMap = ({ vendor, viewType, viewVendor, onMenuClick, page, vendorid, reviewlist}) => {
   return (
-    <ViewVendorMapBlock>
+    <ViewVendorMapBlock viewVendor={viewVendor}>
       <ViewVendorMapWrapper>
         <ViewVendorMapItem className="info">
-          <ViewVendorInfoMapContainer />
+          <ViewVendorInfoMap vendor={vendor} />
         </ViewVendorMapItem>
-        <ViewVendorMapItem className="content">
-          <Route
+
+        <ViewVendorMapItem className="menu">
+          <VendorMenuBar onMenuClick={onMenuClick} />
+        </ViewVendorMapItem>
+
+        <ViewVendorMapItem
+          className="merchandise"
+          view={viewType === "merchandise"}
+        >
+          <ListMerchandiseMapContainer />
+        </ViewVendorMapItem>
+        <ViewVendorMapItem className="review" view={viewType === "review"}>
+         <ListReviewMap page={page} vendorid={vendorid} reviewlist={reviewlist}/>
+        </ViewVendorMapItem>
+        <ViewVendorMapItem className="qna" view={viewType === "qna"}>
+          <ListQnaMapContainer />
+        </ViewVendorMapItem>
+      </ViewVendorMapWrapper>
+    </ViewVendorMapBlock>
+  );
+};
+
+export default ViewVendorMap;
+
+/* <Route
             path={[match.path, match.path + "/merchandise"]}
             exact
             component={ListMerchandiseMapPage}
@@ -78,11 +103,4 @@ const ViewVendorMap = ({ match }) => {
           <Route
             path={match.path + "/review/write"}
             component={MakeReviewPage}
-          />
-        </ViewVendorMapItem>
-      </ViewVendorMapWrapper>
-    </ViewVendorMapBlock>
-  );
-};
-
-export default ViewVendorMap;
+          /> */

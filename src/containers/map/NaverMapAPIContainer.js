@@ -1,8 +1,12 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import NaverMapAPI from "../../lib/map/NaverMapAPI";
-import { changeVendorField, listVendor } from "../../modules/vendor";
+import {
+  changeVendorField,
+  getByVendordomain,
+  listVendor,
+} from "../../modules/vendor";
 
 const NaverMapAPIContainer = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -17,9 +21,12 @@ const NaverMapAPIContainer = ({ match, history }) => {
     [dispatch]
   );
 
-  const onMarkerClick = useCallback((vendordomain) => {
-    history.push(`/map/vendor/${vendordomain}`);
-  }, []);
+  const onMarkerClick = useCallback(
+    (vendordomain) => {
+      dispatch(getByVendordomain(vendordomain));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     dispatch(listVendor());

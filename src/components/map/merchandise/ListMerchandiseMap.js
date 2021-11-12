@@ -76,18 +76,11 @@ const MerchandiseItem = ({ merchandise, onClickLink }) => {
 
 const ListMerchandiseMap = ({
   merchandiselist,
-  loading,
-  error,
   onClickLink,
 }) => {
-  if (error) {
-    return (
-      <ListMerchandiseMapBlock>에러가 발생했습니다.</ListMerchandiseMapBlock>
-    );
-  }
   return (
     <ListMerchandiseMapBlock>
-      {!loading && merchandiselist && (
+      { merchandiselist && (
         <div>
           {merchandiselist&&(merchandiselist.map((merchandise) => (
             <MerchandiseItem

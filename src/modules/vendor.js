@@ -7,6 +7,8 @@ import { takeLatest } from "@redux-saga/core/effects";
 
 const TEMP_SET_VENDOR = "vendor/TEMP_SET_VENDOR";
 const INITIALIZE_VENDOR = "vendor/INITIALIZE_VENDOR";
+const INITIALIZE_VENDOR_LIST_AND_VISIT =
+  "vendor/INITIALIZE_VENDOR_LIST_AND_VISIT";
 const CHANGE_FIELD = "vendor/CHANGE_FIELD";
 const [GET_BY_VENDORID, GET_BY_VENDORID_SUCCESS, GET_BY_VENDORID_FAILURE] =
   createRequestActionTypes("vendor/GET_BY_VENDORID");
@@ -30,6 +32,10 @@ export const tempSetVendor = createAction(
   })
 );
 export const initializeVendor = createAction(INITIALIZE_VENDOR, (id) => id);
+
+export const initializeVendorListAndVisit = createAction(
+  INITIALIZE_VENDOR_LIST_AND_VISIT
+);
 export const changeVendorField = createAction(
   CHANGE_FIELD,
   ({ key, value }) => ({
@@ -107,6 +113,11 @@ const vendor = handleActions(
       ...state,
       vendorid: vendor.vendorid,
       vendordomain: vendor.vendordomain,
+    }),
+    [INITIALIZE_VENDOR_LIST_AND_VISIT]: (state) => ({
+      ...state,
+      visit: null,
+      vendorlist: null,
     }),
     [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
       ...state,

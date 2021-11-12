@@ -19,18 +19,14 @@ const MenuButton = styled(BasicItem)`
   }
 `;
 
-const VendorMenuBar = ({ match }) => {
+const VendorMenuBar = ({ onMenuClick }) => {
   return (
     <VendorMenuBarBlock>
-      <MenuButton>
-        <LinkButton to={match.url + "/merchandise"}>상품 목록</LinkButton>
+      <MenuButton onClick={() => onMenuClick("merchandise")}>
+        상품 목록
       </MenuButton>
-      <MenuButton>
-        <LinkButton to={match.url + "/review"}>리뷰</LinkButton>
-      </MenuButton>
-      <MenuButton>
-        <LinkButton to={match.url + "/qna"}>문의</LinkButton>
-      </MenuButton>
+      <MenuButton onClick={() => onMenuClick("review")}>리뷰</MenuButton>
+      <MenuButton onClick={() => onMenuClick("qna")}>문의</MenuButton>
     </VendorMenuBarBlock>
   );
 };

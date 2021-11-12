@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 import WriteActionButton from "../../../components/common/WriteActionButton";
 import { writeReview } from "../../../modules/write";
 
-const MakeReviewActionButtonContainer = ({ history, location, match }) => {
+const MakeReviewActionButtonContainer = ({ vendorid }) => {
   const dispatch = useDispatch();
   const { title, body, review, reviewError } = useSelector(({ write }) => ({
     title: write.title,
@@ -14,23 +14,17 @@ const MakeReviewActionButtonContainer = ({ history, location, match }) => {
   }));
 
   const onPublish = () => {
-    dispatch(writeReview({ title, body }));
+    dispatch(writeReview({ vendorid, title, body }));
   };
 
-  const onCancel = () => {
-    history.goBack();
-  };
+  const onCancel = () => {};
 
   useEffect(() => {
     if (review) {
-      const { id } = review;
-      const { vendorid } = match.params;
-      history.push(`/map/vendor/${vendorid}/review`);
     }
     if (reviewError) {
-      console.log(reviewError);
     }
-  }, [history, review, reviewError]);
+  }, [review, reviewError]);
 
   return <WriteActionButton onPublish={onPublish} onCancel={onCancel} />;
 };

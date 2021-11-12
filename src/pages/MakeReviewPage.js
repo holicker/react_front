@@ -28,14 +28,14 @@ const MakeReviewPageItem = styled(BasicItem)`
   }
 `;
 
-const MakeReviewPage = () => {
+const MakeReviewPage = ({vendorid}) => {
   return (
     <MakeReviewPageBlock>
       <MakeReviewPageItem className="writeContent">
         <MakeReviewMapContainer />
       </MakeReviewPageItem>
       <MakeReviewPageItem className="writeButton">
-        <MakeReviewActionButtonContainer />
+        <MakeReviewActionButtonContainer vendorid={vendorid}/>
       </MakeReviewPageItem>
     </MakeReviewPageBlock>
   );

@@ -6,31 +6,15 @@ import { merchandiseListByDomain as list } from "../../../modules/merchandiselis
 import ListMerchandiseMap from "../../../components/map/merchandise/ListMerchandiseMap";
 import { initializeVendor } from "../../../modules/vendor";
 
-const ListMerchandiseMapContainer = ({ location, match, history }) => {
+const ListMerchandiseMapContainer = () => {
   const dispatch = useDispatch();
-  const { merchandiselist, error, loading } = useSelector(
-    ({ merchandiselist, loading }) => ({
-      merchandiselist: merchandiselist.merchandiselist,
-      error: merchandiselist.error,
-      loading: loading["merchandiselist/LIST_MERCHANDISE"],
-    })
-  );
-  const { vendorid } = match.params; // vendorid이지만 domain으로 쓰겠다.
-
-  console.log(`match.params vendor domain : ${vendorid}`);
-
-  useEffect(() => {
-    dispatch(list({ vendordomain: vendorid }));
-  }, [dispatch, vendorid]);
-
-  const onClickLink = (id) => {
-    history.push(match.url + `/${id}`);
-  };
+  const { merchandiselist } = useSelector(({ vendor }) => ({
+    merchandiselist: vendor.visit ? vendor.visit.merchandises : null,
+  }));
+  const onClickLink = (id) => {};
 
   return (
     <ListMerchandiseMap
-      loading={loading}
-      error={error}
       merchandiselist={merchandiselist}
       onClickLink={onClickLink}
     />

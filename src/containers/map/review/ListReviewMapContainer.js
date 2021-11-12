@@ -7,22 +7,19 @@ import ListReviewMap from "../../../components/map/review/ListReviewMap";
 
 const ListReviewMapContainer = ({ location, match }) => {
   const dispatch = useDispatch();
-  const { reviewlist, error, loading } = useSelector(({ reviewlist, loading }) => ({
+  const { vendorid, reviewlist } = useSelector(({ reviewlist, vendor }) => ({
+    vendorid: vendor.visit ? vendor.visit.id : null,
     reviewlist: reviewlist.reviewlist,
-    error: reviewlist.error,
-    loading: loading["reviewlist/LIST_QNA"],
   }));
 
   useEffect(() => {
-    const { username } = match.params;
     let { page } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });
     page = page - 1;
-    dispatch(list({ username, page }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, location.search]);
-  return <ListReviewMap loading={loading} error={error} reviewlist={reviewlist} />;
+    dispatch(list({ vendorid, page }));
+  }, [dispatch, vendorid]);
+  return <ListReviewMap reviewlist={reviewlist} />;
 };
 
 export default withRouter(ListReviewMapContainer);

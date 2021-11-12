@@ -1,9 +1,14 @@
 import OpenColor from "open-color";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import MakeReviewMapContainer from "../../../containers/map/review/MakeReviewMapContainer";
+import { reviewList } from "../../../modules/reviewlist";
+import MakeReviewPage from "../../../pages/MakeReviewPage";
 import BasicButton from "../../common/BasicButton";
 import { BasicDiv } from "../../common/BasicDiv";
 import { BasicItem } from "../../common/BasicItem";
+import MakeReviewMap from "./MakeReviewMap";
 
 const ListReviewMapBlock = styled(BasicDiv)`
   margin: 0px 0px;
@@ -50,33 +55,40 @@ const ListReviewComponent = styled(BasicItem)`
   }
 `;
 
-const ReviewItem = ({review}) => {
-  
+const ReviewItem = ({ review }) => {
   const { title, body, writer, registeredDate } = review;
   return (
     <ListReviewMapItem>
       <ListReviewComponent className="photo">사진</ListReviewComponent>
       <ListReviewComponent className="title">{title}</ListReviewComponent>
-      <ListReviewComponent className="info">별점 등 정보{registeredDate}</ListReviewComponent>
+      <ListReviewComponent className="info">
+        별점 등 정보{registeredDate}
+      </ListReviewComponent>
       <ListReviewComponent className="desc">{body}</ListReviewComponent>
     </ListReviewMapItem>
   );
 };
 
-const ListReviewMap = ({ reviewlist, loading, error }) => {
+const ListReviewMap = ({ reviewlist, page, vendorid }) => {
+  const dispatch = useDispatch();
 
-  if (error) {
-    return <ListReviewMapBlock>에러가 발생했습니다.</ListReviewMapBlock>;
-  }
+  useEffect(() => {
+    dispatch(reviewList({ vendorid, page }));
+  }, [dispatch, vendorid, page]);
+
+  console.log(`review list : ${reviewlist}`);
+
   return (
     <ListReviewMapBlock>
-        {!loading && reviewlist && (
-          <div>
-            {reviewlist.content.map((review) => (
-              <ReviewItem review={review} key={review.id} />
-            ))}
-          </div>
-        )}
+      <BasicButton>리뷰 작성</BasicButton>
+        <MakeReviewPage vendorid={vendorid} />
+      {reviewlist && (
+        <div>
+          {reviewlist.content.map((review) => (
+            <ReviewItem review={review} key={review.id} />
+          ))}
+        </div>
+      )}
     </ListReviewMapBlock>
   );
 };

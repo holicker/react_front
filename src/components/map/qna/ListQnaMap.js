@@ -50,7 +50,6 @@ const QnaItem = ({ qna, onClickLink }) => {
 };
 
 const ListQnaMap = ({ qnalist, loading, error, onClickLink }) => {
-  console.log(onClickLink);
   if (error) {
     return <ListQnaMapBlock>에러가 발생했습니다.</ListQnaMapBlock>;
   }

@@ -1,7 +1,13 @@
 import React from "react";
 import { Marker, NaverMap, RenderAfterNavermapsLoaded } from "react-naver-maps";
 
-const NaverMapAPI = ({ vendorlist, onChangeField, onMarkerClick }) => {
+const NaverMapAPI = ({
+  vendorlist,
+  onChangeField,
+  onMarkerClick,
+  lng,
+  lat,
+}) => {
   const onClickMap = (e) => {
     alert(`lat : ${e.coord.lat()} / lng : ${e.coord.lng()}`);
     onChangeField({ key: "vendorlng", value: e.coord.lng() });
@@ -48,4 +54,4 @@ const NaverMapAPI = ({ vendorlist, onChangeField, onMarkerClick }) => {
   );
 };
 
-export default NaverMapAPI;
+export default React.memo(NaverMapAPI);

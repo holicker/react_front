@@ -35,15 +35,12 @@ const SlickCarousel = ({ type, images }) => {
   return (
     <SlickCarouselBlock>
       <Slider {...settings}>
-        <SlickCarouselItem>
-          <Image src="https://localhost:8443/vendor/image/2" />
-        </SlickCarouselItem>
-        <SlickCarouselItem>
-          <Image src="https://localhost:8443/vendor/image/1" />
-        </SlickCarouselItem>
-        <SlickCarouselItem>
-          <Image src="https://localhost:8443/vendor/image/3" />
-        </SlickCarouselItem>
+        {images &&
+          images.map((image) => (
+            <SlickCarouselItem key={image.id}>
+              <Image src={`https://localhost:8443/${type}/image/${image.id}`} />
+            </SlickCarouselItem>
+          ))}
       </Slider>
     </SlickCarouselBlock>
   );

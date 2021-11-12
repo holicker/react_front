@@ -69,7 +69,8 @@ export const updateQna = createAction(
 );
 export const writeReview = createAction(
   WRITE_REVIEW,
-  ({ title, body, tags }) => ({
+  ({ vendorid, title, body, tags }) => ({
+    vendorid,
     title,
     body,
     tags,

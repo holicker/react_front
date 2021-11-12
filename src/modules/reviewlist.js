@@ -8,8 +8,8 @@ import createRequestSaga, {
 const [LIST_REVIEW, LIST_REVIEW_SUCCESS, LIST_REVIEW_FAILURE] =
   createRequestActionTypes('reviewlist/LIST_REVIEW');
 
-export const reviewList = createAction(LIST_REVIEW, ({ writer, page }) => ({
-  writer,
+export const reviewList = createAction(LIST_REVIEW, ({ vendorid, page }) => ({
+  vendorid,
   page,
 }));
 

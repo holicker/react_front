@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import ViewVendorInfoMap from "../../components/map/ViewVendorInfoMap";
 import { getByVendordomain } from "../../modules/vendor";
+
 const VeiwVendorInfoMapContainer = ({ match }) => {
   const { vendor } = useSelector(({ vendor }) => ({
     vendor: vendor.visit,

@@ -3,10 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { BasicDiv } from "../common/BasicDiv";
 import { BasicItem } from "../common/BasicItem";
-import Responsive from "../common/Responsive";
 import SlickCarousel from "../common/SlickCarousel";
-import VendorMenuBar from "../menubar/VendorMenuBar";
-import VendorMainMap from "./VendorMainMap";
 
 const ViewVendorInfoMapBlock = styled(BasicDiv)`
   position: relative;
@@ -20,7 +17,7 @@ const ViewVendorInfoMapBlock = styled(BasicDiv)`
 
 const ViewVendorInfoMapItem = styled(BasicItem)``;
 
-const ViewVendorInfoMap = ({ vendor, match }) => {
+const ViewVendorInfoMap = ({ vendor }) => {
   return (
     <ViewVendorInfoMapBlock>
       <ViewVendorInfoMapItem className="title">
@@ -31,10 +28,6 @@ const ViewVendorInfoMap = ({ vendor, match }) => {
       </ViewVendorInfoMapItem>
       <ViewVendorInfoMapItem className="desc">
         {vendor && vendor.vendorInfo}
-      </ViewVendorInfoMapItem>
-
-      <ViewVendorInfoMapItem className="menu">
-        <VendorMenuBar match={match} />
       </ViewVendorInfoMapItem>
     </ViewVendorInfoMapBlock>
   );
