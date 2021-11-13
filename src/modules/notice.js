@@ -1,13 +1,13 @@
-import { takeLatest } from '@redux-saga/core/effects';
-import { createAction, handleActions } from 'redux-actions';
-import * as noticeAPI from '../lib/api/notice';
+import { takeLatest } from "@redux-saga/core/effects";
+import { createAction, handleActions } from "redux-actions";
+import * as noticeAPI from "../lib/api/notice";
 import createRequestSaga, {
   createRequestActionTypes,
-} from '../lib/createRequestSaga';
+} from "../lib/createRequestSaga";
 
 const [READ_NOTICE, READ_NOTICE_SUCCESS, READ_NOTICE_FAILURE] =
-  createRequestActionTypes('notice/READ_NOTICE');
-const UNLOAD_NOTICE = 'notice/UNLOAD_NOTICE';
+  createRequestActionTypes("notice/READ_NOTICE");
+const UNLOAD_NOTICE = "notice/UNLOAD_NOTICE";
 
 export const readNotice = createAction(READ_NOTICE, (id) => id);
 export const unloadNotice = createAction(UNLOAD_NOTICE);
@@ -19,7 +19,7 @@ export function* noticeSaga() {
 }
 
 const initialState = {
-  notice : null,
+  notice: null,
   error: null,
 };
 
@@ -29,14 +29,10 @@ const notice = handleActions(
       ...state,
       notice,
     }),
-  },
-  {
     [READ_NOTICE_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
     }),
-  },
-  {
     [UNLOAD_NOTICE]: () => initialState,
   },
   initialState

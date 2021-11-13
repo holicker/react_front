@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { BasicDiv } from "../../common/BasicDiv";
 import { BasicItem } from "../../common/BasicItem";
 import { LinkButton } from "../../common/LinkButton";
+import MerchandiseModal from "../../common/MerchandiseModal";
 
 const ListMerchandiseMapBlock = styled(BasicDiv)`
   margin: 0px 0px;
@@ -56,8 +57,9 @@ const MerchandiseItem = ({ merchandise, onClickLink }) => {
     merchandisePrice,
     registeredDate,
   } = merchandise;
-  return (// 이렇게 매개변수가 있는 놈은 새롭게 함수를 지정해줘야 하는 듯.    
-    <ListMerchandiseMapItem onClick={() => onClickLink(id)}>    
+  return (
+    // 이렇게 매개변수가 있는 놈은 새롭게 함수를 지정해줘야 하는 듯.
+    <ListMerchandiseMapItem onClick={() => onClickLink(id)}>
       <ListMerchandiseComponent className="photo">
         사진{registeredDate}
       </ListMerchandiseComponent>
@@ -75,21 +77,32 @@ const MerchandiseItem = ({ merchandise, onClickLink }) => {
 };
 
 const ListMerchandiseMap = ({
+  modal,
+  merchandise,
   merchandiselist,
   onClickLink,
+  onClickClose,
 }) => {
   return (
     <ListMerchandiseMapBlock>
-      { merchandiselist && (
+      {merchandiselist && (
         <div>
-          {merchandiselist&&(merchandiselist.map((merchandise) => (
-            <MerchandiseItem
-              merchandise={merchandise}
-              key={merchandise.id}
-              onClickLink={onClickLink}
-            />
-          )))}
+          {merchandiselist &&
+            merchandiselist.map((merchandise) => (
+              <MerchandiseItem
+                merchandise={merchandise}
+                key={merchandise.id}
+                onClickLink={onClickLink}
+              />
+            ))}
         </div>
+      )}
+      {merchandise.merchandise && (
+        <MerchandiseModal
+          visible={modal}
+          onClickClose={onClickClose}
+          merchandise={merchandise.merchandise}
+        />
       )}
     </ListMerchandiseMapBlock>
   );

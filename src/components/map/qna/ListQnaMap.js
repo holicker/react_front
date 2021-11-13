@@ -69,7 +69,7 @@ const ListQnaMap = ({ qnalist, page, vendorid, vendor, location }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(qnaList({ vendorid, page }));
+    vendorid && dispatch(qnaList({ vendorid, page }));
   }, [dispatch, vendorid, page, location]);
 
   return (

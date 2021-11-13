@@ -1,13 +1,13 @@
-import { takeLatest } from '@redux-saga/core/effects';
-import { createAction, handleActions } from 'redux-actions';
-import * as qnaAPI from '../lib/api/qna';
+import { takeLatest } from "@redux-saga/core/effects";
+import { createAction, handleActions } from "redux-actions";
+import * as qnaAPI from "../lib/api/qna";
 import createRequestSaga, {
   createRequestActionTypes,
-} from '../lib/createRequestSaga';
+} from "../lib/createRequestSaga";
 
 const [READ_QNA, READ_QNA_SUCCESS, READ_QNA_FAILURE] =
-  createRequestActionTypes('qna/READ_QNA');
-const UNLOAD_QNA = 'qna/UNLOAD_QNA';
+  createRequestActionTypes("qna/READ_QNA");
+const UNLOAD_QNA = "qna/UNLOAD_QNA";
 
 export const readQna = createAction(READ_QNA, (id) => id);
 export const unloadQna = createAction(UNLOAD_QNA);
@@ -29,16 +29,13 @@ const qna = handleActions(
       ...state,
       qna,
     }),
-  },
-  {
     [READ_QNA_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
     }),
-  },
-  {
     [UNLOAD_QNA]: () => initialState,
-  },initialState
+  },
+  initialState
 );
 
 export default qna;

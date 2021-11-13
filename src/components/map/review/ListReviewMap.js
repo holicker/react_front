@@ -74,7 +74,7 @@ const ListReviewMap = ({ reviewlist, page, vendorid, vendor, location }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(reviewList({ vendorid, page }));
+    vendorid && dispatch(reviewList({ vendorid, page }));
   }, [dispatch, vendorid, page, location]);
 
   return (

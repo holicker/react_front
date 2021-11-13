@@ -51,8 +51,6 @@ const RegisterMerchandiseContainer = ({ history, match }) => {
 
   useEffect(() => {
     if (merchandise) {
-      const { id } = merchandise;
-      history.push(`/merchandise/view/${id}`);
     }
     if (merchandiseError) {
       console.log(merchandiseError);

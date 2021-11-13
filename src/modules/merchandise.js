@@ -32,15 +32,11 @@ const merchandise = handleActions(
       ...state,
       merchandise,
     }),
-  },
-  {
     [READ_MERCHANDISE_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
     }),
-  },
-  {
-    [UNLOAD_MERCHANDISE]: () => initialState,
+    [UNLOAD_MERCHANDISE]: (state) => initialState,
   },
   initialState
 );
