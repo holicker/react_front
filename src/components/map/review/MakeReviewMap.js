@@ -45,6 +45,10 @@ const MakeReviewMap = ({ title, body, onChangeField }) => {
     onChangeField({ key: "title", value: e.target.value });
   };
 
+  const onChangeBody = (e) => {
+    onChangeField({ key: "body", value: e.target.value });
+  };
+
   return (
     <MakeReviewMapBlock>
       <MakeReviewMapItem className="writeTitle">
@@ -59,7 +63,13 @@ const MakeReviewMap = ({ title, body, onChangeField }) => {
         인포랑 사진 업로드, 별점
       </MakeReviewMapItem>
       <MakeReviewMapItem className="writeContent">
-        <Editor onChangeField={onChangeField} body={body} />
+        <textarea
+          placeholder="내용"
+          row="5"
+          column="30"
+          value={body}
+          onChange={onChangeBody}
+        />
       </MakeReviewMapItem>
     </MakeReviewMapBlock>
   );

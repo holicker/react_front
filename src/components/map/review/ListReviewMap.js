@@ -1,6 +1,7 @@
 import OpenColor from "open-color";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { withRouter } from "react-router";
 import styled from "styled-components";
 import MakeReviewMapContainer from "../../../containers/map/review/MakeReviewMapContainer";
 import { reviewList } from "../../../modules/reviewlist";
@@ -69,19 +70,17 @@ const ReviewItem = ({ review }) => {
   );
 };
 
-const ListReviewMap = ({ reviewlist, page, vendorid }) => {
+const ListReviewMap = ({ reviewlist, page, vendorid, vendor, location }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(reviewList({ vendorid, page }));
-  }, [dispatch, vendorid, page]);
-
-  console.log(`review list : ${reviewlist}`);
+  }, [dispatch, vendorid, page, location]);
 
   return (
     <ListReviewMapBlock>
       <BasicButton>리뷰 작성</BasicButton>
-        <MakeReviewPage vendorid={vendorid} />
+      <MakeReviewPage vendorid={vendorid} vendor={vendor} />
       {reviewlist && (
         <div>
           {reviewlist.content.map((review) => (
@@ -93,4 +92,4 @@ const ListReviewMap = ({ reviewlist, page, vendorid }) => {
   );
 };
 
-export default ListReviewMap;
+export default withRouter(ListReviewMap);

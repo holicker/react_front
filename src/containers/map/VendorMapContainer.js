@@ -1,33 +1,40 @@
+import qs from "qs";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import VendorMap from "../../components/map/VendorMap";
-import qs from "qs";
+import { qnalist } from "../../lib/api/qna";
 import {
   changeVendorField,
   getByVendordomain,
-  initializeVendor,
   initializeVendorListAndVisit,
   listVendor,
 } from "../../modules/vendor";
+import { initialize } from "../../modules/write";
 
 const VendorMapContainer = ({ location, match }) => {
-  const { vendorid, vendor, vendorlng, vendorlat, vendorlist, reviewlist } =
-    useSelector(({ vendor, reviewlist }) => ({
-      vendorid: vendor.visit ? vendor.visit.id : null,
-      vendorlng: vendor.vendorlng,
-      vendorlat: vendor.vendorlat,
-      vendorlist: vendor.vendorlist,
-      vendor: vendor.visit,
-      reviewlist: reviewlist.reviewlist,
-    }));
+  const {
+    vendorid,
+    vendor,
+    vendorlng,
+    vendorlat,
+    vendorlist,
+    reviewlist,
+    qnalist,
+  } = useSelector(({ vendor, reviewlist, qnalist }) => ({
+    vendorid: vendor.visit ? vendor.visit.id : null,
+    vendorlng: vendor.vendorlng,
+    vendorlat: vendor.vendorlat,
+    vendorlist: vendor.vendorlist,
+    vendor: vendor.visit,
+    reviewlist: reviewlist.reviewlist,
+    qnalist: qnalist.qnalist,
+  }));
 
-  console.log(`reviewlist : ${reviewlist}`);
-
-  let { page } = qs.parse(location.search, {
+  let { page, merchandise, qna, review } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
-
+  const { domain } = match.params;
   const dispatch = useDispatch();
 
   const [lng, setLng] = useState("126.988205");
@@ -47,12 +54,14 @@ const VendorMapContainer = ({ location, match }) => {
   );
 
   const onMenuClick = (type) => {
+    dispatch(initialize());
     setViewType(type);
   };
 
   useEffect(() => {
     dispatch(listVendor());
-  }, []);
+    if (domain) dispatch(getByVendordomain(domain));
+  }, [dispatch]);
 
   useEffect(() => {
     return dispatch(initializeVendorListAndVisit());
@@ -71,6 +80,7 @@ const VendorMapContainer = ({ location, match }) => {
       page={page}
       vendorid={vendorid}
       reviewlist={reviewlist}
+      qnalist={qnalist}
     />
   );
 };

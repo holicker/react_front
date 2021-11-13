@@ -40,7 +40,7 @@ function App() {
           <Switch>
             <Route component={MainPage} path={"/"} exact />
             <PrivateRoute component={NoticePage} path={"/notice"} />
-            <Route component={MapPage} path={"/map"} />
+            <Route component={MapPage} path={["/map/:domain", "/map"]} />
             <Route component={SearchPage} path={"/search"} />
             <Route component={ManagePage} path={"/manage"} />
             <Route component={MerchandisePage} path={"/merchandise"} />

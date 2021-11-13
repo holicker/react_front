@@ -29,14 +29,14 @@ const MakeQnaPageItem = styled(BasicItem)`
   }
 `;
 
-const MakeQnaPage = () => {
+const MakeQnaPage = ({vendorid}) => {
   return (
     <MakeQnaPageBlock>
       <MakeQnaPageItem className="writeContent">
         <MakeQnaMapContainer />
       </MakeQnaPageItem>
       <MakeQnaPageItem className="writeButton">
-        <MakeQnaActionButtonContainer />
+        <MakeQnaActionButtonContainer vendorid={vendorid} />
       </MakeQnaPageItem>
     </MakeQnaPageBlock>
   );

@@ -14,7 +14,7 @@ const CHANGE_FIELD = "write/CHANGE_FIELD";
 const initialState = {
   title: ``,
   body: ``,
-  price:``,
+  price: ``,
   notice: null,
   noticeError: null,
   qna: null,
@@ -46,21 +46,31 @@ const [WRITE_NOTICE, WRITE_NOTICE_SUCCESS, WRITE_NOTICE_FAILURE] =
   createRequestActionTypes("write/WRITE_NOTICE");
 const [UPDATE_NOTICE, UPDATE_NOTICE_SUCCESS, UPDATE_NOTICE_FAILURE] =
   createRequestActionTypes("write/UPDATE_NOTICE");
-const [WRITE_MERCHANDISE, WRITE_MERCHANDISE_SUCCESS, WRITE_MERCHANDISE_FAILURE] =
-  createRequestActionTypes("write/WRITE_MERCHANDISE");
-const [UPDATE_MERCHANDISE, UPDATE_MERCHANDISE_SUCCESS, UPDATE_MERCHANDISE_FAILURE] =
-  createRequestActionTypes("write/UPDATE_MERCHANDISE");
+const [
+  WRITE_MERCHANDISE,
+  WRITE_MERCHANDISE_SUCCESS,
+  WRITE_MERCHANDISE_FAILURE,
+] = createRequestActionTypes("write/WRITE_MERCHANDISE");
+const [
+  UPDATE_MERCHANDISE,
+  UPDATE_MERCHANDISE_SUCCESS,
+  UPDATE_MERCHANDISE_FAILURE,
+] = createRequestActionTypes("write/UPDATE_MERCHANDISE");
 
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
-export const writeQna = createAction(WRITE_QNA, ({ title, body, tags }) => ({
-  title,
-  body,
-  tags,
-}));
+export const writeQna = createAction(
+  WRITE_QNA,
+  ({ vendorid, title, body, tags }) => ({
+    vendorid,
+    title,
+    body,
+    tags,
+  })
+);
 export const setOriginalQna = createAction(SET_ORIGINAL_QNA, (qna) => qna);
 
 export const updateQna = createAction(
@@ -103,14 +113,19 @@ export const updateNotice = createAction(
   ({ id, title, body, tags }) => ({ id, title, body, tags })
 );
 
-export const writeMerchandise = createAction(WRITE_MERCHANDISE, (formdata) => (formdata));
-export const setOriginalMerchandise = createAction(SET_ORIGINAL_MERCHANDISE, (merchandise) => merchandise);
+export const writeMerchandise = createAction(
+  WRITE_MERCHANDISE,
+  (formdata) => formdata
+);
+export const setOriginalMerchandise = createAction(
+  SET_ORIGINAL_MERCHANDISE,
+  (merchandise) => merchandise
+);
 
 export const updateMerchandise = createAction(
   UPDATE_MERCHANDISE,
   ({ id, title, body, tags }) => ({ id, title, body, tags })
 );
-
 
 const writeQnaSaga = createRequestSaga(WRITE_QNA, qnaAPI.writeQna);
 const updateQnaSaga = createRequestSaga(UPDATE_QNA, qnaAPI.updateQna);
@@ -124,7 +139,10 @@ const updateNoticeSaga = createRequestSaga(
   UPDATE_NOTICE,
   noticeAPI.updateNotice
 );
-const writeMerchandiseSaga = createRequestSaga(WRITE_MERCHANDISE, merchandiseAPI.writeMerchandise);
+const writeMerchandiseSaga = createRequestSaga(
+  WRITE_MERCHANDISE,
+  merchandiseAPI.writeMerchandise
+);
 const updateMerchandiseSaga = createRequestSaga(
   UPDATE_MERCHANDISE,
   merchandiseAPI.updateMerchandise

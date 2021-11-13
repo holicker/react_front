@@ -1,7 +1,14 @@
 import OpenColor from "open-color";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { withRouter } from "react-router";
 import styled from "styled-components";
+import { qnaList } from "../../../modules/qnalist";
+import MakeQnaPage from "../../../pages/MakeQnaPage";
+import BasicButton from "../../common/BasicButton";
 import { BasicDiv } from "../../common/BasicDiv";
+import { BasicItem } from "../../common/BasicItem";
+
 const ListQnaMapBlock = styled(BasicDiv)`
   margin: 0px 0px;
   background-color: ${OpenColor.gray[2]};
@@ -10,63 +17,74 @@ const ListQnaMapBlock = styled(BasicDiv)`
   width: 100%;
 `;
 
-// const ListQnaMapItem = styled.div`
-//   margin: 1rem 1rem;
-//   flex-direction: column;
-//   display: flex;
-// `;
+const ListQnaMapItem = styled.div`
+  margin: 1rem 1rem;
+  height: 9rem;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+`;
 
-const QnaTable = styled.table``;
-const QnaTh = styled.th``;
-const QnaTr = styled.tr``;
-const QnaTd = styled.td``;
-
-const QnaHead = () => {
-  return (
-    <thead>
-      <QnaTr>
-        <QnaTh className="no">번호</QnaTh>
-        <QnaTh className="title">질문 제목</QnaTh>
-        <QnaTh className="info">날짜</QnaTh>
-        <QnaTh className="desc">조회수</QnaTh>
-        <QnaTh className="desc">답변 여부</QnaTh>
-      </QnaTr>
-    </thead>
-  );
-};
-const QnaItem = ({ qna, onClickLink }) => {
-  const { id, title, body, writer, registerdDate } = qna;
-
-  return (
-    <QnaTr onClick={() => onClickLink(id)}>
-      <QnaTd className="no">번호</QnaTd>
-      <QnaTd className="title">{title}</QnaTd>
-      <QnaTd className="info">
-        {registerdDate} / {writer}
-      </QnaTd>
-      <QnaTd className="desc">{body}</QnaTd>
-    </QnaTr>
-  );
-};
-
-const ListQnaMap = ({ qnalist, loading, error, onClickLink }) => {
-  if (error) {
-    return <ListQnaMapBlock>에러가 발생했습니다.</ListQnaMapBlock>;
+const ListQnaComponent = styled(BasicItem)`
+  color: ${OpenColor.gray[9]};
+  background-color: ${OpenColor.pink[2]};
+  &.photo {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 7;
   }
+  &.title {
+    grid-column-start: 4;
+    grid-column-end: 8;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+  &.info {
+    grid-column-start: 4;
+    grid-column-end: 8;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+  &.desc {
+    grid-column-start: 4;
+    grid-column-end: 8;
+    grid-row-start: 3;
+    grid-row-end: 8;
+  }
+`;
+
+const QnaItem = ({ qna }) => {
+  const { title, body, writer, registeredDate } = qna;
+  return (
+    <ListQnaMapItem>
+      <ListQnaComponent className="title">{title}</ListQnaComponent>
+      <ListQnaComponent className="info">{registeredDate}</ListQnaComponent>
+      <ListQnaComponent className="desc">{body}</ListQnaComponent>
+    </ListQnaMapItem>
+  );
+};
+
+const ListQnaMap = ({ qnalist, page, vendorid, vendor, location }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(qnaList({ vendorid, page }));
+  }, [dispatch, vendorid, page, location]);
+
   return (
     <ListQnaMapBlock>
-      {!loading && qnalist && (
-        <QnaTable>
-          <QnaHead />
-          <tbody>
-            {qnalist.content.map((qna) => (
-              <QnaItem qna={qna} key={qna.id} onClickLink={onClickLink} />
-            ))}
-          </tbody>
-        </QnaTable>
+      <BasicButton>질문 작성</BasicButton>
+      <MakeQnaPage vendorid={vendorid} vendor={vendor} />
+      {qnalist && (
+        <div>
+          {qnalist.content.map((qna) => (
+            <QnaItem qna={qna} key={qna.id} />
+          ))}
+        </div>
       )}
     </ListQnaMapBlock>
   );
 };
 
-export default ListQnaMap;
+export default withRouter(ListQnaMap);

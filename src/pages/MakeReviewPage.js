@@ -1,5 +1,6 @@
 import OpenColor from "open-color";
 import React from "react";
+import { withRouter } from "react-router";
 import styled from "styled-components";
 import { BasicDiv } from "../components/common/BasicDiv";
 import { BasicItem } from "../components/common/BasicItem";
@@ -28,17 +29,17 @@ const MakeReviewPageItem = styled(BasicItem)`
   }
 `;
 
-const MakeReviewPage = ({vendorid}) => {
+const MakeReviewPage = ({ vendorid , vendor}) => {
   return (
     <MakeReviewPageBlock>
       <MakeReviewPageItem className="writeContent">
         <MakeReviewMapContainer />
       </MakeReviewPageItem>
       <MakeReviewPageItem className="writeButton">
-        <MakeReviewActionButtonContainer vendorid={vendorid}/>
+        <MakeReviewActionButtonContainer vendorid={vendorid} vendor={vendor} />
       </MakeReviewPageItem>
     </MakeReviewPageBlock>
   );
 };
 
-export default MakeReviewPage;
+export default withRouter(MakeReviewPage);

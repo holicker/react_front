@@ -1,5 +1,6 @@
 import OpenColor from "open-color";
 import React, { useEffect, useState } from "react";
+import { withRouter } from "react-router";
 import styled from "styled-components";
 import NaverMapAPI from "../../lib/map/NaverMapAPI";
 import { BasicDiv } from "../common/BasicDiv";
@@ -57,7 +58,8 @@ const VendorMap = ({
   lng,
   page,
   vendorid,
-  reviewlist
+  reviewlist,
+  qnalist
 }) => {
   const [viewVendor, setViewVendor] = useState(false);
 
@@ -92,6 +94,7 @@ const VendorMap = ({
             viewVendor={viewVendor}
             page={page}
             reviewlist={reviewlist}
+            qnalist={qnalist}
             vendorid={vendorid}
           />
         </VendorMapItem>
@@ -100,4 +103,4 @@ const VendorMap = ({
   );
 };
 
-export default VendorMap;
+export default withRouter(VendorMap);

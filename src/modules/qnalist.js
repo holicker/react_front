@@ -8,8 +8,8 @@ import createRequestSaga, {
 const [LIST_QNA, LIST_QNA_SUCCESS, LIST_QNA_FAILURE] =
   createRequestActionTypes('qnalist/LIST_QNA');
 
-export const qnaList = createAction(LIST_QNA, ({ writer, page }) => ({
-  writer,
+export const qnaList = createAction(LIST_QNA, ({ vendorid, page }) => ({
+  vendorid,
   page,
 }));
 
@@ -29,10 +29,12 @@ const qnalist = handleActions(
     [LIST_QNA_SUCCESS]: (state, { payload: qnalist }) => ({
       ...state,
       qnalist,
+      error:null,
     }),
     [LIST_QNA_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
+      qnalist:null,
     }),
   },
   initialState

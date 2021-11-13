@@ -43,6 +43,9 @@ const MakeQna = ({ title, body, onChangeField }) => {
   const onChangeTitle = (e) => {
     onChangeField({ key: "title", value: e.target.value });
   };
+  const onChangeBody = (e) => {
+    onChangeField({ key: "body", value: e.target.value });
+  };
 
   return (
     <MakeQnaBlock>
@@ -56,7 +59,7 @@ const MakeQna = ({ title, body, onChangeField }) => {
       </MakeQnaItem>
       <MakeQnaItem className="writeInfo">인포랑 비밀글 여부</MakeQnaItem>
       <MakeQnaItem className="writeContent">
-        <Editor body={body} onChangeField={onChangeField} />
+        <textarea placeholder="제목" value={body} onChange={onChangeBody} />
       </MakeQnaItem>
     </MakeQnaBlock>
   );

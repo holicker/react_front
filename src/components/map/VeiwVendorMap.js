@@ -1,5 +1,6 @@
 import OpenColor from "open-color";
 import React from "react";
+import { withRouter } from "react-router";
 import styled from "styled-components";
 import ListMerchandiseMapContainer from "../../containers/map/merchandise/ListMerchandiseMapContainer";
 import ListQnaMapContainer from "../../containers/map/qna/ListQnaMapContainer";
@@ -8,6 +9,7 @@ import { BasicDiv } from "../common/BasicDiv";
 import { BasicItem } from "../common/BasicItem";
 import Responsive from "../common/Responsive";
 import VendorMenuBar from "../menubar/VendorMenuBar";
+import ListQnaMap from "./qna/ListQnaMap";
 import ListReviewMap from "./review/ListReviewMap";
 import ViewVendorInfoMap from "./ViewVendorInfoMap";
 
@@ -50,7 +52,16 @@ const ViewVendorMapItem = styled(BasicItem)`
   }
 `;
 
-const ViewVendorMap = ({ vendor, viewType, viewVendor, onMenuClick, page, vendorid, reviewlist}) => {
+const ViewVendorMap = ({
+  vendor,
+  viewType,
+  viewVendor,
+  onMenuClick,
+  page,
+  vendorid,
+  reviewlist,
+  qnalist,
+}) => {
   return (
     <ViewVendorMapBlock viewVendor={viewVendor}>
       <ViewVendorMapWrapper>
@@ -69,17 +80,27 @@ const ViewVendorMap = ({ vendor, viewType, viewVendor, onMenuClick, page, vendor
           <ListMerchandiseMapContainer />
         </ViewVendorMapItem>
         <ViewVendorMapItem className="review" view={viewType === "review"}>
-         <ListReviewMap page={page} vendorid={vendorid} reviewlist={reviewlist}/>
+          <ListReviewMap
+            page={page}
+            vendorid={vendorid}
+            vendor={vendor}
+            reviewlist={reviewlist}
+          />
         </ViewVendorMapItem>
         <ViewVendorMapItem className="qna" view={viewType === "qna"}>
-          <ListQnaMapContainer />
+          <ListQnaMap
+            page={page}
+            vendorid={vendorid}
+            vendor={vendor}
+            qnalist={qnalist}
+          />
         </ViewVendorMapItem>
       </ViewVendorMapWrapper>
     </ViewVendorMapBlock>
   );
 };
 
-export default ViewVendorMap;
+export default withRouter(ViewVendorMap);
 
 /* <Route
             path={[match.path, match.path + "/merchandise"]}
